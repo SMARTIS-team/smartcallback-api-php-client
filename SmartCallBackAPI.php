@@ -27,6 +27,9 @@ class SmartCallBack_API {
     public $REQUEST_PARAMS = [];
     public $RESULT = '';
 
+    //флаг, указывающий, что запрос к апи будет в формате json
+    const isJsonRequest = true;
+
     function __construct($POST = Array()){
 
         if(!empty($POST['action']) && preg_match("/[$#&?><\'\"]/" , $POST['action'])==NULL){
@@ -146,10 +149,20 @@ class SmartCallBack_API {
         curl_setopt($ch, CURLOPT_USERAGENT, "Opera/9.80 (Windows NT 5.1; U; ru) Presto/2.9.168 Version/11.51");
         curl_setopt($ch, CURLOPT_URL, self::API_URL . $method. '/');
 
-        //добавляем POST параметры если они были переданы в функцию
-        if (is_array($POST)) {
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($POST, '', '&'));
+        if(self::isJsonRequest && is_array($POST)) {
+            $json = json_encode($POST);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+                    'Content-Type: application/json',
+                    'Content-Length: ' . strlen($json))
+            );
+        } else {
+            //добавляем POST параметры если они были переданы в функцию
+            if (is_array($POST)) {
+                curl_setopt($ch, CURLOPT_POST, true);
+                curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($POST, '', '&'));
+            }
         }
 
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);

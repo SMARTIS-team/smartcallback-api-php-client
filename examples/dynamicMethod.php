@@ -10,7 +10,7 @@ require_once("../SmartCallBackAPI.php");
 
 $SmartisAPI = new SmartCallBack_API();
 
-$SmartisAPI->apiRequest('getDomains', []);
+$SmartisAPI->apiRequest('StatusesGetList', ["client_id"=>SmartCallBack_API::$CLIENT_ID]);
 
 echo '
     <h4>Параметры запроса:</h4>
@@ -19,3 +19,5 @@ echo '
     <h4>Результат выполнения:</h4>
     <pre>'.print_r($SmartisAPI->RESULT, true).'</pre>
 ';
+
+echo '<pre>'.print_r(json_decode($SmartisAPI->RESULT, true), true).'</pre>';
