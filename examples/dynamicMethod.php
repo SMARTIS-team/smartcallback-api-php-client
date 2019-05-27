@@ -6,25 +6,26 @@
  * Time: 12:27
  */
 
-require_once("../SmartCallBackAPI.php");
-$SmartisAPI = new SmartCallBack_API();
+use SmartCallBack\API;
+require_once '../SmartCallBackAPI.php';
+$configs = parse_ini_file('../config.ini');
 
-
-$SmartisAPI->apiRequest('StatusesGetList', ["client_id"=>SmartCallBack_API::$CLIENT_ID]);
+$SmartCallBackAPI = new API($configs['CLIENT_TOKEN'], $configs['API_TOKEN'], $configs['API_SIGNATURE']);
+$SmartCallBackAPI->apiRequest('StatusesGetList', []);
 
 echo '
     <h4>Параметры запроса:</h4>
-    <pre>'.print_r($SmartisAPI->REQUEST_PARAMS, true).'</pre>
+    <pre>'.print_r($SmartCallBackAPI->REQUEST_PARAMS, true).'</pre>
     <hr>
     <h4>Результат выполнения:</h4>
-    <pre>'.print_r($SmartisAPI->RESULT, true).'</pre>
+    <pre>'.print_r($SmartCallBackAPI->RESULT, true).'</pre>
 ';
 
-echo '<pre>'.print_r(json_decode($SmartisAPI->RESULT, true), true).'</pre>';
+echo '<pre>'.print_r(json_decode($SmartCallBackAPI->RESULT, true), true).'</pre>';
 
 
 //Другой пример - получения заявок
-/*$SmartisAPI->apiRequest('getQueryList', [
+/*$SmartCallBackAPI->apiRequest('getQueryList', [
     "client_id"=>SmartCallBack_API::$CLIENT_ID,
     "domen" => "YOUR_DOMAIN_ID",
     "date_from" => "2018-05-18 00:00:00",

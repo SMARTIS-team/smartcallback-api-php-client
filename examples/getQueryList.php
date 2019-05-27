@@ -6,14 +6,16 @@
  * Time: 12:11
  */
 
-require_once("../SmartCallBackAPI.php");
+use SmartCallBack\API;
+require_once '../SmartCallBackAPI.php';
 
 $POST = Array(
-    "date_from" => 1536354000,//strtotime('14.12.2016'),
-    "date_to"   => 1536354000,//strtotime('15.12.2016'),
+    "date_from" => strtotime('2019-03-01'),
+    "date_to"   => strtotime('2019-04-01'),
 );
+$configs = parse_ini_file('../config.ini');
+$SmartCallBackAPI = new API($configs['CLIENT_TOKEN'], $configs['API_TOKEN'], $configs['API_SIGNATURE']);
 
-$SmartCallBackAPI = new SmartCallBack_API();
 $SmartCallBackAPI->getQueryList($POST);
 
 echo '

@@ -6,13 +6,15 @@
  * Time: 12:11
  */
 
-require_once("../SmartCallBackAPI.php");
+use SmartCallBack\API;
+require_once '../SmartCallBackAPI.php';
+$configs = parse_ini_file('../config.ini');
 
 $POST = Array(
-    "query_id" => 510674,
+    "query_id" => 694,
 );
 
-$SmartCallBackAPI = new SmartCallBack_API();
+$SmartCallBackAPI = new API($configs['CLIENT_TOKEN'], $configs['API_TOKEN'], $configs['API_SIGNATURE']);
 $SmartCallBackAPI->getQuery($POST);
 
 echo '

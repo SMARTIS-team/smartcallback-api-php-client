@@ -5,7 +5,10 @@
  * Date: 17.11.16
  * Time: 12:35
  */
-class SmartCallBack_API {
+
+namespace SmartCallBack;
+
+class API {
 
     /**
      *  Документация по API https://smartcallback.ru/docimentation-api/
@@ -13,13 +16,12 @@ class SmartCallBack_API {
      */
 
     //Статичные параметры для одного приложения
-    const API_URL       = 'https://smartcallback.ru/api/v2/';
-    const API_TOKEN     = 'INSERT_YOU_API_TOKEN_HERE';
-    const API_SIGNATURE = 'INSERT_YOU_API_SIGNATURE_HERE';
+    const API_URL           = 'https://smartcallback.ru/api/v2/';
 
-    //Одно приложение может работать для нескольких клиентов. Запросите данные у службы поддержки support@smart-is.ru
-    public static $CLIENT_ID    = 'INSERT_YOUR_CLIENT_ID';
-    public static $CLIENT_TOKEN = 'INSERT_YOUR_CLIENT_TOKEN';
+    //configure at config.ini
+    private $_API_TOKEN;
+    private $_API_SIGNATURE;
+    private $_CLIENT_TOKEN;
 
 
     const HTTP_INTERFACE = 'auto'; //'auto': autodetect, 'curl' or 'fopen'
@@ -30,14 +32,12 @@ class SmartCallBack_API {
     //флаг, указывающий, что запрос к апи будет в формате json
     const isJsonRequest = true;
 
-    function __construct($POST = Array()){
+    function __construct($clientToken, $apiToken, $apiSignature){
 
-        if(!empty($POST['action']) && preg_match("/[$#&?><\'\"]/" , $POST['action'])==NULL){
+        $this->_CLIENT_TOKEN  = $clientToken;
+        $this->_API_SIGNATURE = $apiSignature;
+        $this->_API_TOKEN     = $apiToken;
 
-            if(method_exists(__CLASS__, $POST['action'])){
-                 $this->$POST['action']($POST);
-            }
-        }
     }
 
     /**
@@ -46,13 +46,13 @@ class SmartCallBack_API {
      * @param $method
      * @param array $POST
      * @return bool|string
-     * @throws Exception
+     * @throws \Exception
      */
     function apiRequest($method, $POST = Array()){
 
         if(empty($method)) RETURN false;
 
-        $POST['apiToken'] = self::API_TOKEN;
+        $POST['apiToken'] = $this->_API_TOKEN;
         $POST = $this->_signRequest($POST);
 
         if (self::HTTP_INTERFACE == 'auto')
@@ -70,7 +70,7 @@ class SmartCallBack_API {
                 $this->RESULT = $this->_fopenRequest($method, $POST);
                 break;
             default:
-                throw new Exception('Invalid http interface defined. No such interface "' . self::HTTP_INTERFACE . '"');
+                throw new \Exception('Invalid http interface defined. No such interface "' . self::HTTP_INTERFACE . '"');
         }
 
         RETURN $this->RESULT;
@@ -86,7 +86,7 @@ class SmartCallBack_API {
         foreach($POST as $v){
             $all .= $v;
         }
-        $POST["apiSignature"] = md5($all.self::API_SIGNATURE);
+        $POST["apiSignature"] = md5($all.$this->_API_SIGNATURE);
         $all = null;
 
         RETURN $POST;
@@ -179,7 +179,7 @@ class SmartCallBack_API {
 
         $method = 'getDomains';
         $POST = Array(
-            "client_id" => self::$CLIENT_ID,
+            "token" => $this->_CLIENT_TOKEN,
         );
 
         RETURN $this->apiRequest($method, $POST);
@@ -189,7 +189,8 @@ class SmartCallBack_API {
 
         $method = 'getQuery';
 
-        $POST['client_id'] = self::$CLIENT_ID;
+        $POST['token'] = $this->_CLIENT_TOKEN;
+
 
         RETURN $this->apiRequest($method, $POST);
     }
@@ -198,8 +199,7 @@ class SmartCallBack_API {
 
         $method = 'getQueryList';
 
-        //$POST['client_id'] = self::$CLIENT_ID;
-        $POST['token'] = self::$CLIENT_TOKEN;
+        $POST['token'] = $this->_CLIENT_TOKEN;
 
         RETURN $this->apiRequest($method, $POST);
     }
