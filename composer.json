@@ -9,6 +9,6 @@
             "email": "igorhome5@yandex.ru"
         }
     ],
-    "minimum-stability": "1.1.0",
+    "minimum-stability": "dev",
     "require": {}
 }
