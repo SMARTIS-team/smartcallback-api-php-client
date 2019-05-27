@@ -6,7 +6,7 @@
  * Time: 12:35
  */
 
-namespace SmartCallBack;
+namespace Smartis\SmartCallBack;
 
 class API {
 

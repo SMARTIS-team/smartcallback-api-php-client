@@ -6,8 +6,8 @@
  * Time: 12:27
  */
 
-use SmartCallBack\API;
-require_once '../SmartCallBackAPI.php';
+use Smartis\SmartCallBack\API;
+require_once '../src/API.php';
 $configs = parse_ini_file('../config.ini');
 
 $SmartCallBackAPI = new API($configs['CLIENT_TOKEN'], $configs['API_TOKEN'], $configs['API_SIGNATURE']);

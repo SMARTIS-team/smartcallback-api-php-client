@@ -6,8 +6,8 @@
  * Time: 12:11
  */
 
-use SmartCallBack\API;
-require_once '../SmartCallBackAPI.php';
+use Smartis\SmartCallBack\API;
+require_once '../src/API.php';
 
 $POST = Array(
     "date_from" => strtotime('2019-03-01'),
