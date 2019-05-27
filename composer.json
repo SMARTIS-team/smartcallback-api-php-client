@@ -1,0 +1,14 @@
+{
+    "name": "smartis/smartcallback-api-php-client",
+    "description": "Basic lib for work with SmartCallBack service API - omnichannel system for communication business and people",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ibalashov",
+            "email": "igorhome5@yandex.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}

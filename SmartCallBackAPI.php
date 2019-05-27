@@ -198,7 +198,8 @@ class SmartCallBack_API {
 
         $method = 'getQueryList';
 
-        $POST['client_id'] = self::$CLIENT_ID;
+        //$POST['client_id'] = self::$CLIENT_ID;
+        $POST['token'] = self::$CLIENT_TOKEN;
 
         RETURN $this->apiRequest($method, $POST);
     }

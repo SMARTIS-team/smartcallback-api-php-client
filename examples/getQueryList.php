@@ -9,8 +9,8 @@
 require_once("../SmartCallBackAPI.php");
 
 $POST = Array(
-    "date_from" => strtotime('14.12.2016'),
-    "date_to"   => strtotime('15.12.2016'),
+    "date_from" => 1536354000,//strtotime('14.12.2016'),
+    "date_to"   => 1536354000,//strtotime('15.12.2016'),
 );
 
 $SmartCallBackAPI = new SmartCallBack_API();
