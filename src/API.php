@@ -175,7 +175,7 @@ class API {
     }
 
 
-    function getDomains($POST = Array()){
+    public function getDomains($POST = Array()){
 
         $method = 'getDomains';
         $POST = Array(
@@ -185,7 +185,7 @@ class API {
         RETURN $this->apiRequest($method, $POST);
     }
 
-    function getQuery($POST = Array()){
+    public function getQuery($POST = Array()){
 
         $method = 'getQuery';
 
@@ -195,12 +195,18 @@ class API {
         RETURN $this->apiRequest($method, $POST);
     }
 
-    function getQueryList($POST = Array()){
+    public function getQueryList($POST = Array()){
 
         $method = 'getQueryList';
 
         $POST['token'] = $this->_CLIENT_TOKEN;
 
+        RETURN $this->apiRequest($method, $POST);
+    }
+
+    public function callStart($POST = Array()){
+        $method = 'callStart';
+        $POST['token'] = $this->_CLIENT_TOKEN;
         RETURN $this->apiRequest($method, $POST);
     }
 }
