@@ -209,4 +209,10 @@ class API {
         $POST['token'] = $this->_CLIENT_TOKEN;
         RETURN $this->apiRequest($method, $POST);
     }
+
+    public function sendSms($POST = Array()){
+        $method = 'sendSms';
+        $POST['token'] = $this->_CLIENT_TOKEN;
+        RETURN $this->apiRequest($method, $POST);
+    }
 }

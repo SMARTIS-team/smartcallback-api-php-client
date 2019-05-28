@@ -28,8 +28,8 @@ $SmartCallBackAPI->callStart([
     'comment'       => 'comment',
     'call_direction'=> 1, //1 - сначала phonefrom, 2 - сначала phoneto
 
-    'robotext_without_operator_action' => '',
-    'robotext_with_operator_action' => '',
+    'robotext_without_operator_action' => 'Звонок созданный через API, начинаю звонить второму абоненту',
+    'robotext_with_operator_action' => 'Звонок созданный через API, для соединения со вторым абонентом нажмите любую клавишу',
 ]);
 
 echo '
